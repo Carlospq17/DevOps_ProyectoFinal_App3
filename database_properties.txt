@@ -1,0 +1,4 @@
+host="localhost"
+database="punto_de_venta"
+user="root"
+password="password"
