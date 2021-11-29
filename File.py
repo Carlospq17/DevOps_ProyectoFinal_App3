@@ -10,3 +10,10 @@ class File:
             info.append(x)
         f.close();
         return info
+
+    def appendLineFile(self, filename, line):
+        with open(filename + ".csv", "a") as file:
+            file.write(line + "\n")
+        file.close()
+            
+

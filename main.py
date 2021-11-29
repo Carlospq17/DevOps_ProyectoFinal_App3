@@ -28,9 +28,27 @@ class main:
             )
 
         connection = c.getMySQLConnection()
-        result = c.executeQuery(connection, "SHOW TABLES")
-        for row in result:
-            print(row[0])
+        tables = c.executeQuery(connection, "SHOW TABLES")
+
+        for table in tables:
+            print(" === " + table[0] + " === ")
+            tablesHeader = c.executeQuery(connection, "SHOW COLUMNS FROM " + table[0] + ";")
+            tableColumnNames = []
+            for tableHeader in tablesHeader:
+                tableColumnNames.append(tableHeader[0])
+                columnNames = ",".join(tableColumnNames)
+            #print(columnNames)
+            f.appendLineFile(table[0], columnNames)
+
+            tablesBody = c.executeQuery(connection, "SELECT * FROM " + table[0] + ";")
+            for tableRow in tablesBody:
+                rowElementList = []
+                for rowElements in tableRow:
+                    rowElementList.append(rowElements)
+                columnValues = ','.join(map(str, rowElementList))
+                #print(columnValues)
+                f.appendLineFile(table[0], columnValues)
+
         return
 
 if __name__ == "__main__":
