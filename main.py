@@ -1,17 +1,27 @@
 import re
 import os
 import glob
+from os import walk
 from DBConnection import DBConnection
 from File import File
+from GoogleDriveConnection import GoogleDriveConnection
 
 class main:
     def __init__(self):
         return
     
     def clear_directory(self):
-        files = glob.glob('backup_db/*')
+        files = glob.glob('punto_de_venta/*')
         for f in files:
             os.remove(f)
+        return
+
+    def saveCSVinDrive(self):
+        g = GoogleDriveConnection()
+        for (dirpath, dirnames, filenames) in walk("punto_de_venta/"):
+            for name in filenames:
+                g.loadFileGoogleDrive(dirpath, name)
+        return
 
     def buildDBProperties(self, info):
         properties = {}
@@ -39,14 +49,12 @@ class main:
         tables = c.executeQuery(connection, "SHOW TABLES")
 
         for table in tables:
-            print(" === " + table[0] + " === ")
             tablesHeader = c.executeQuery(connection, "SHOW COLUMNS FROM " + table[0] + ";")
             tableColumnNames = []
             for tableHeader in tablesHeader:
                 tableColumnNames.append(tableHeader[0])
                 columnNames = ",".join(tableColumnNames)
-            #print(columnNames)
-            f.appendLineFile( "backup_db/" +table[0], columnNames)
+            f.appendLineFile( "punto_de_venta/" +table[0], columnNames)
 
             tablesBody = c.executeQuery(connection, "SELECT * FROM " + table[0] + ";")
             for tableRow in tablesBody:
@@ -54,9 +62,9 @@ class main:
                 for rowElements in tableRow:
                     rowElementList.append(rowElements)
                 columnValues = ','.join(map(str, rowElementList))
-                #print(columnValues)
-                f.appendLineFile( "backup_db/" + table[0], columnValues)
+                f.appendLineFile( "punto_de_venta/" + table[0], columnValues)
 
+        self.saveCSVinDrive()
         return
 
 if __name__ == "__main__":
