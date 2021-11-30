@@ -1,0 +1,5 @@
+id,email,password,status,remember_token,created_at,updated_at
+1,mohr.ali@example.org,$2y$10$OU.9rHFMdwwObh.i9X.5GOsyzVbbJZAWscwLk75nKVPt0pflow/HK,1,U4HB5PDXuw,2021-11-08 00:43:48,2021-11-08 00:43:48
+2,mquitzon@example.org,$2y$10$rTh1fEdPnaX40UnqdnUe..d10h7f59AMnYlqrmsdf8jIp.e3pn55S,1,dquZVJWUmp,2021-11-08 00:43:48,2021-11-08 00:43:48
+6,prueba@hotmail.com,$2y$10$R0.mtORf2fAg7hhBHV8WcexuHOaOY1ybnUUsUoaEPT5FVFMCgsgT.,1,01X88KMwYW,2021-11-10 18:36:09,2021-11-10 18:36:09
+7,randommail@gmail.com,$2y$10$Sy.yf3wHrGl18Ej1KBB/fuFXH9tAjtxnrKulDJugZbDNiKwj5L9y6,1,1e2mzStGlB,2021-11-10 19:38:51,2021-11-10 19:38:51

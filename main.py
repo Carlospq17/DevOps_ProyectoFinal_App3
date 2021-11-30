@@ -1,10 +1,17 @@
+import re
+import os
+import glob
 from DBConnection import DBConnection
 from File import File
-import re
 
 class main:
     def __init__(self):
         return
+    
+    def clear_directory(self):
+        files = glob.glob('backup_db/*')
+        for f in files:
+            os.remove(f)
 
     def buildDBProperties(self, info):
         properties = {}
@@ -16,6 +23,7 @@ class main:
         return properties
     
     def backup(self):
+        self.clear_directory()
         f = File()
         info = f.getArrayInfo("database_properties.txt")
         properties = self.buildDBProperties(info)
@@ -38,7 +46,7 @@ class main:
                 tableColumnNames.append(tableHeader[0])
                 columnNames = ",".join(tableColumnNames)
             #print(columnNames)
-            f.appendLineFile(table[0], columnNames)
+            f.appendLineFile( "backup_db/" +table[0], columnNames)
 
             tablesBody = c.executeQuery(connection, "SELECT * FROM " + table[0] + ";")
             for tableRow in tablesBody:
@@ -47,7 +55,7 @@ class main:
                     rowElementList.append(rowElements)
                 columnValues = ','.join(map(str, rowElementList))
                 #print(columnValues)
-                f.appendLineFile(table[0], columnValues)
+                f.appendLineFile( "backup_db/" + table[0], columnValues)
 
         return
 
