@@ -1,7 +1,0 @@
-id,migration,batch
-1,2014_10_12_000000_create_users_table,1
-2,2019_12_14_000001_create_personal_access_tokens_table,1
-3,2021_10_02_063557_create_clients_table,1
-4,2021_10_02_202929_create_sales_table,1
-5,2021_10_09_174535_create_products_table,1
-6,2021_10_10_033117_create_sales_products_table,1

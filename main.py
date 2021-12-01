@@ -21,6 +21,7 @@ class main:
         for (dirpath, dirnames, filenames) in walk("punto_de_venta/"):
             for name in filenames:
                 g.loadFileGoogleDrive(dirpath, name)
+        g.generateNewSavedFilesJSON()
         return
 
     def buildDBProperties(self, info):
@@ -33,7 +34,6 @@ class main:
         return properties
     
     def backup(self):
-        self.clear_directory()
         f = File()
         info = f.getArrayInfo("database_properties.txt")
         properties = self.buildDBProperties(info)
@@ -53,20 +53,22 @@ class main:
             tableColumnNames = []
             for tableHeader in tablesHeader:
                 tableColumnNames.append(tableHeader[0])
-                columnNames = ",".join(tableColumnNames)
+                columnNames = ','.join(map(str, tableColumnNames))
             f.appendLineFile( "punto_de_venta/" +table[0], columnNames)
 
             tablesBody = c.executeQuery(connection, "SELECT * FROM " + table[0] + ";")
             for tableRow in tablesBody:
                 rowElementList = []
                 for rowElements in tableRow:
+                    rowElements = rowElements.replace(",", "-") if isinstance(rowElements, str) else rowElements
+                    rowElements = rowElements.replace("\n", " ") if isinstance(rowElements, str) else rowElements
                     rowElementList.append(rowElements)
                 columnValues = ','.join(map(str, rowElementList))
                 f.appendLineFile( "punto_de_venta/" + table[0], columnValues)
-
-        self.saveCSVinDrive()
         return
 
 if __name__ == "__main__":
     m = main()
+    m.clear_directory()
     m.backup()
+    m.saveCSVinDrive()
