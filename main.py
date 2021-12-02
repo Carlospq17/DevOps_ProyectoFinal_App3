@@ -59,7 +59,7 @@ class main:
             for tableHeader in tablesHeader:
                 tableColumnNames.append(tableHeader[0])
                 columnNames = ','.join(map(str, tableColumnNames))
-            f.appendLineFile( "punto_de_venta/" + table[0] + "_" + self.__date.strftime("%Y") + "-" + self.__date.strftime("%m") + "-" + self.__date.strftime("%d") + "-" + self.__date.strftime("%H") + ":" + self.__date.strftime("%M" + ".csv"), columnNames)
+            f.appendLineFile( "punto_de_venta/" + table[0] + "_" + self.__date.strftime("%Y") + "-" + self.__date.strftime("%m") + "-" + self.__date.strftime("%d") + "-" + self.__date.strftime("%H") + ":" + self.__date.strftime("%M") + ".csv", columnNames)
 
             tablesBody = c.executeQuery(connection, "SELECT * FROM " + table[0] + ";")
             for tableRow in tablesBody:
