@@ -74,6 +74,6 @@ class main:
 
 if __name__ == "__main__":
     m = main()
-    # m.clear_directory()
-    # m.backup()
-    # m.saveCSVinDrive()
+    m.clear_directory()
+    m.backup()
+    m.saveCSVinDrive()
