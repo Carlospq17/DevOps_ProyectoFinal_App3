@@ -1,3 +1,5 @@
+import re
+import logging
 from typing import Any
 from googleapiclient.http import MediaFileUpload
 from Google import Create_Service  # This assumes that your file is in my_proj/my_proj/Google.py
@@ -21,6 +23,7 @@ class GoogleDriveConnection:
             body = datos,
             media_body = media
         ).execute()
+        logging.debug('Creando nuevo archivo en la carpeta de Google Drive ' + str(f))
         return f
 
     def updateFileDrive(self, drive, datos, media):
@@ -30,6 +33,7 @@ class GoogleDriveConnection:
             media_body = media,
             body = {"name" : datos["name"]}
         ).execute()
+        logging.debug('Actualiza archivo ' + str(f) + ' en la carpeta de Google Drive')
         return f
     
     def loadFileGoogleDrive(self, filepath, filename):
@@ -44,16 +48,18 @@ class GoogleDriveConnection:
             }
 
         media = MediaFileUpload( filepath + "/" + filename, mimetype="text/csv")
+        logging.debug('Archivo cargado ' + str(media) + ' para guardarlo en Google Drive')
 
-        if self.__jsonHandler.keyExists(json.dumps(j), filename) :
-            datos.update({"fileId" : j[filename]})
+        if self.__jsonHandler.keyExists(json.dumps(j), re.split("(.*_)", filename)[1]) : #aplicar la empresion regular apropiada
+            datos.update({"fileId" : j[re.split("(.*_)", filename)[1]]})
             file = self.updateFileDrive(drive, datos, media)
         else:
             file = self.createNewFileDrive(drive, datos, media)
             
-        self.__saved_files.update({file["name"] : file["id"]})
+        self.__saved_files.update({re.split("(.*_)", file["name"])[1] : file["id"]}) #guardar utilizando expresion regular apropiada
         return
 
     def generateNewSavedFilesJSON(self):
+        logging.info("Generando nuevo JSON para archivos guardados")
         self.__jsonHandler.writeJSON("saved_files.json", self.__saved_files)
         return

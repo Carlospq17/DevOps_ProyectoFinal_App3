@@ -1,6 +1,7 @@
 import re
 import os
 import glob
+import logging
 import datetime
 from os import walk
 from DBConnection import DBConnection
@@ -12,16 +13,20 @@ class main:
     __date = ""
 
     def __init__(self):
+        logging.basicConfig(format='%(asctime)s: %(levelname)s: %(message)s', filename='loggin.log', level=logging.DEBUG)
         self.__date = datetime.datetime.now()
         return
     
     def clear_directory(self):
+        logging.info('Limpiando el directorio de la base de datos')
         files = glob.glob('punto_de_venta/*')
         for f in files:
+            logging.debug('Eliminando el archivo ' + f)
             os.remove(f)
         return
 
     def saveCSVinDrive(self):
+        logging.info('Guardando los archivos CSV de las tablas en Google Drive')
         g = GoogleDriveConnection()
         for (dirpath, dirnames, filenames) in walk("punto_de_venta/"):
             for name in filenames:
@@ -30,6 +35,7 @@ class main:
         return
 
     def buildDBProperties(self, info):
+        logging.info('Obteniendo propiedades para la base de datos')
         properties = {}
         for l in info:
             e = l.split("=")
@@ -39,6 +45,7 @@ class main:
         return properties
     
     def backup(self):
+        logging.info('Realizando respaldo de tablas de la base de datos')
         f = File()
         info = f.getArrayInfo("database_properties.txt")
         properties = self.buildDBProperties(info)
@@ -55,6 +62,7 @@ class main:
 
         for table in tables:
             tablesHeader = c.executeQuery(connection, "SHOW COLUMNS FROM " + table[0] + ";")
+            logging.debug("Columnas de las tablas: " + str(tablesHeader))
             tableColumnNames = []
             for tableHeader in tablesHeader:
                 tableColumnNames.append(tableHeader[0])
@@ -62,6 +70,7 @@ class main:
             f.appendLineFile( "punto_de_venta/" + table[0] + "_" + self.__date.strftime("%Y") + "-" + self.__date.strftime("%m") + "-" + self.__date.strftime("%d") + "-" + self.__date.strftime("%H") + ":" + self.__date.strftime("%M") + ".csv", columnNames)
 
             tablesBody = c.executeQuery(connection, "SELECT * FROM " + table[0] + ";")
+            logging.debug('Información de las tablas: ' + str(tablesBody))
             for tableRow in tablesBody:
                 rowElementList = []
                 for rowElements in tableRow:

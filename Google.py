@@ -1,3 +1,4 @@
+import logging
 import pickle
 import os
 import datetime
@@ -8,6 +9,7 @@ from google.auth.transport.requests import Request
 
 
 def Create_Service(client_secret_file, api_name, api_version, *scopes, prefix=''):
+    logging.info('Creando Servicio para Google')
     CLIENT_SECRET_FILE = client_secret_file
     API_SERVICE_NAME = api_name
     API_VERSION = api_version
@@ -38,11 +40,11 @@ def Create_Service(client_secret_file, api_name, api_version, *scopes, prefix=''
 
     try:
         service = build(API_SERVICE_NAME, API_VERSION, credentials=cred)
-        print(API_SERVICE_NAME, API_VERSION, 'service created successfully')
+        logging.info('Service created successfully: ' + API_SERVICE_NAME + ' ' + API_VERSION)
         return service
     except Exception as e:
-        print(e)
-        print(f'Failed to create service instance for {API_SERVICE_NAME}')
+        logging.error(f'Failed to create service instance for {API_SERVICE_NAME}')
+        logging.error(e)
         os.remove(os.path.join(working_dir, token_dir, pickle_file))
         return None
 

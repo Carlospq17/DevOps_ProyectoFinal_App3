@@ -1,3 +1,4 @@
+import logging
 import mysql.connector
 from mysql.connector import Error
 
@@ -38,12 +39,15 @@ class DBConnection:
         self.__password = password
 
     def executeQuery(self, c, q):
+        logging.debug('Ejecutando sentencia ' + q)
         cursor = c.cursor()
         cursor.execute(q)
         tables = cursor.fetchall()
+        logging.debug('Resultados: ' + str(tables))
         return tables
 
     def getMySQLConnection(self):
+        logging.info('Estableciendo conexión con la base de datos...')
         try:
             connection = mysql.connector.connect(
                 host=self.get_host(),
@@ -53,13 +57,13 @@ class DBConnection:
                 )
             if connection.is_connected():
                 db_Info = connection.get_server_info()
-                print("Connected to MySQL Server version ", db_Info)
+                logging.info("Connected to MySQL Server version" + str(db_Info))
                 cursor = connection.cursor()
                 cursor.execute("select database();")
                 record = cursor.fetchone()
-                print("You're connected to database: ", record)
+                logging.info("You're connected to database: " + str(record))
                 return connection;
         except Error as e:
-            print("Error while connecting to MySQL", e)
+            logging.error("Error connecting to MySQL " + str(e))
             return
 
