@@ -12,7 +12,7 @@ class File:
         return info
 
     def appendLineFile(self, filename, line):
-        with open(filename + ".csv", "a") as file:
+        with open(filename, "a") as file:
             file.write(line + "\n")
         file.close()
             

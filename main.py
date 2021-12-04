@@ -1,13 +1,18 @@
 import re
 import os
 import glob
+import datetime
 from os import walk
 from DBConnection import DBConnection
 from File import File
 from GoogleDriveConnection import GoogleDriveConnection
 
 class main:
+
+    __date = ""
+
     def __init__(self):
+        self.__date = datetime.datetime.now()
         return
     
     def clear_directory(self):
@@ -54,7 +59,7 @@ class main:
             for tableHeader in tablesHeader:
                 tableColumnNames.append(tableHeader[0])
                 columnNames = ','.join(map(str, tableColumnNames))
-            f.appendLineFile( "punto_de_venta/" +table[0], columnNames)
+            f.appendLineFile( "punto_de_venta/" + table[0] + "_" + self.__date.strftime("%Y") + "-" + self.__date.strftime("%m") + "-" + self.__date.strftime("%d") + "-" + self.__date.strftime("%H") + ":" + self.__date.strftime("%M") + ".csv", columnNames)
 
             tablesBody = c.executeQuery(connection, "SELECT * FROM " + table[0] + ";")
             for tableRow in tablesBody:
@@ -64,7 +69,7 @@ class main:
                     rowElements = rowElements.replace("\n", " ") if isinstance(rowElements, str) else rowElements
                     rowElementList.append(rowElements)
                 columnValues = ','.join(map(str, rowElementList))
-                f.appendLineFile( "punto_de_venta/" + table[0], columnValues)
+                f.appendLineFile( "punto_de_venta/" + table[0] + "_" + self.__date.strftime("%Y") + "-" + self.__date.strftime("%m") + "-" + self.__date.strftime("%d") + "-" + self.__date.strftime("%H") + ":" + self.__date.strftime("%M") + ".csv", columnValues)
         return
 
 if __name__ == "__main__":
