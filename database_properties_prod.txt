@@ -1,4 +1,4 @@
 host="172.17.0.2"
 database="punto_de_venta"
 user="root"
-password="password"
+password="root"

@@ -2,10 +2,10 @@ Para conseguir la imagen de docker de MySQL
 docker pull mysql
 
 Corremos el contenedor utilizando la imagen de MySQL 
-docker run --name=Docker_Punto_de_Venta -p 3308:3306 -e MYSQL_ROOT_PASSWORD=password -d mysql:latest
+docker run --name=Docker_Punto_de_Venta -p 3308:3306 -e MYSQL_ROOT_PASSWORD=root -d mysql:latest
 
 //Utilizamos desde nuestro dispositivo Host la IP para acceder a la BD e insertar los datos para la DB correspondiente
--h 0.0.0.0:3308 -u root -p password -d
+-h 0.0.0.0:3308 -u root -p root -d
 
 Corremos el comando para crear la imagen del dockerfile
 docker build -t devopspython .
