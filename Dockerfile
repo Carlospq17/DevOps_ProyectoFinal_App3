@@ -10,4 +10,4 @@ RUN apt-get update
 RUN apt-get install -y iputils-ping
 
 #Corremos el programa
-#CMD ["python3", "main.py"]
+CMD python3 main.py && tail -f /dev/null
