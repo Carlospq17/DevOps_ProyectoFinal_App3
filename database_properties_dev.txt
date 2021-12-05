@@ -1,4 +1,4 @@
 host="localhost"
 database="punto_de_venta"
-user="readOnly"
+user="root"
 password="root"

@@ -7,10 +7,6 @@ docker run --name=Docker_Punto_de_Venta -p 3308:3306 -e MYSQL_ROOT_PASSWORD=root
 //Utilizamos desde nuestro dispositivo Host la IP para acceder a la BD e insertar los datos para la DB correspondiente
 -h 0.0.0.0:3308 -u root -p root -d
 
-//Adicional a esto se ha de crear un nuevo usuario dentro de la BD que tenga solo permisos de lectura en el schema punto_de_venta
-User: readOnly
-Password: root
-
 Corremos el comando para crear la imagen del dockerfile
 docker build -t devopspython .
 
