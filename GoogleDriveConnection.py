@@ -37,6 +37,7 @@ class GoogleDriveConnection:
         return f
     
     def loadFileGoogleDrive(self, filepath, filename):
+        logging.debug("Cargar archivo al google drive: " + filepath + "/" + filename)
         j = self.__jsonHandler.getJSON("saved_files.json")
         drive = Create_Service(self.CLIENT_SECRET_FILE, self.API_NAME, self.API_VERSION, self.SCOPES)
 
@@ -50,7 +51,7 @@ class GoogleDriveConnection:
         media = MediaFileUpload( filepath + "/" + filename, mimetype="text/csv")
         logging.debug('Archivo cargado ' + str(media) + ' para guardarlo en Google Drive')
 
-        if self.__jsonHandler.keyExists(json.dumps(j), re.split("(.*_)", filename)[1]) : #aplicar la empresion regular apropiada
+        if self.__jsonHandler.keyExists(json.dumps(j), re.split("(.*_)", filename)[1]) : #aplicar la expresion regular apropiada
             datos.update({"fileId" : j[re.split("(.*_)", filename)[1]]})
             file = self.updateFileDrive(drive, datos, media)
         else:

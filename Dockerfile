@@ -8,6 +8,8 @@ RUN pip install mysql-connector-python
 RUN pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib
 RUN apt-get update
 RUN apt-get install -y iputils-ping
+RUN apt-get install vim -y
+RUN mkdir punto_de_venta
 
-#Corremos el programa
-CMD python3 main.py && tail -f /dev/null
+#corremos el programa
+#CMD python3 main.py && tail -f /dev/null
