@@ -47,7 +47,7 @@ class main:
     def backup(self):
         logging.info('Realizando respaldo de tablas de la base de datos')
         f = File()
-        info = f.getArrayInfo("database_properties.txt")
+        info = f.getArrayInfo("database_properties_prod.txt")
         properties = self.buildDBProperties(info)
 
         c = DBConnection(
