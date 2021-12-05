@@ -1,0 +1,27 @@
+Para conseguir la imagen de docker de MySQL
+docker pull mysql
+
+Corremos el contenedor utilizando la imagen de MySQL 
+docker run --name=Docker_Punto_de_Venta -p 3308:3306 -e MYSQL_ROOT_PASSWORD=password -d mysql:latest
+
+//Utilizamos desde nuestro dispositivo Host la IP para acceder a la BD e insertar los datos para la DB correspondiente
+-h 0.0.0.0:3308 -u root -p password -d
+
+Corremos el comando para crear la imagen del dockerfile
+docker build -t devopspython .
+
+Corremos el contenedor de la app
+docker run devopspython
+
+** Verificar que el .txt que se utilice sea la versión para producción (Prod) **
+
+================================================================
+COMANDOS ESTRAS
+Conectar a CLI de contenedor
+docker exec -it Docker_Punto_de_Venta /bin/bash
+
+Cerrar la interfaz CLI de docker
+ctrl + d
+
+Desde el contenedor de nuestra base de datos, con esto nos conectamos al servidor MySQL
+mysql -u root -p
