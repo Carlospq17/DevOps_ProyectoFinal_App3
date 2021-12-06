@@ -17,11 +17,11 @@ RUN apt-get -y install cron
 RUN apt-get install -y iputils-ping
 RUN apt-get install nano
 
-#configuramos el job que realiza el crontab
-COPY crontab /etc/cron.d/crontab
-RUN chmod 0644 /etc/cron.d/crontab
-RUN crontab /etc/cron.d/crontab
+#Creamos el archivo para los logs del cron job
 RUN touch /var/log/cron.log
 
-#corremos el programa utilizando el crontab
-ENTRYPOINT cron && tail -f /var/log/cron.log
+#configuramos el job que realiza el crontab
+RUN (crontab -l ; echo "10 * * * * /usr/local/bin/python3 /root/main.py >> /var/log/cron.log 2>&1") | crontab
+
+RUN chmod +x entrypoint.sh
+CMD ["bash","entrypoint.sh"]
