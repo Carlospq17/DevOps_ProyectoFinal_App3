@@ -21,7 +21,7 @@ RUN apt-get install nano
 RUN touch /var/log/cron.log
 
 #configuramos el job que realiza el crontab
-RUN (crontab -l ; echo "10 * * * * /usr/local/bin/python3 /root/main.py >> /var/log/cron.log 2>&1") | crontab
+RUN (crontab -l ; echo "*/10 * * * * /usr/local/bin/python3 /root/main.py >> /var/log/cron.log 2>&1") | crontab
 
 RUN chmod +x entrypoint.sh
 CMD ["bash","entrypoint.sh"]
