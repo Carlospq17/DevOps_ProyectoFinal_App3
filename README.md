@@ -99,3 +99,12 @@ password="root"
 
 ---
 
+## Algunos comandos extras que pueden ser utiles
+
+Para docker
+    : `docker network ls` : Para listar todas las redes que se encuentran disponibles
+
+Para la CLI de los contenedores que se utilizan:
+    : `nano [filename]` : Abrir un archivo
+    : `service filebeat status` : Revisar el estatus del servicio
+    : `cmd + d` : Cerrar la CLI del contenedor
