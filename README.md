@@ -17,6 +17,7 @@ Revisa las conexiones que tiene esta network
 ---
 
 ## Obtenemos las imagenes de los contenedores que utilizaremos
+
 ### MySQL
 `docker pull mysql:latest`
 #### Si se va a acceder a la base de datos desde la máquina host para ingresar datos manualmente, las credenciales son:
