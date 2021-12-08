@@ -1,4 +1,0 @@
-
-
-* * * * * /usr/bin/python3 main.py >> /root/cron.log 2>&1
-
